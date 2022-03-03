@@ -9,11 +9,25 @@ from matplotlib.widgets import Widget
 from . import utils as ul
 
 
+def quick_wrap(funcs: list):
+    """Quickly wraps functions and executes them in order."""
+    def wrapper(*args, **kwargs):
+        for func in funcs:
+            func(*args, **kwargs)
+        
+    return wrapper
+
+
 class WidgetExt(tk.Widget):
     """Class for widget extensions."""
-    def __init__(self, master, widgetName, cnf=..., kw=..., extra=...) -> None:
-        super().__init__(master, widgetName, cnf, kw, extra)
-        self.place_on_grid()
+
+
+class ExtGridable(WidgetExt):
+    """Inherited to when widget can be placed on a grid."""
+    def __init_subclass__(cls) -> None:
+        def init_end(self: ExtGridable, *args, **kwargs):
+            self.place_on_grid()
+        cls.__init__ = quick_wrap([cls.__init__, init_end])
 
 
     def place_on_grid(
@@ -36,8 +50,15 @@ class WidgetExt(tk.Widget):
         )
 
 
+
 class ExtContainer(WidgetExt):
     """Inherited to when widget is a container."""
+    def __init_subclass__(cls) -> None:
+        def init_end(self: ExtContainer, *args, **kwargs):
+            self.set_weights()
+        cls.__init__ = quick_wrap([cls.__init__, init_end])
+
+
     def set_weights(self, x=(1,), y=(1,)):
         """Sets the row and column weights for this widget."""
         for idx, weight in enumerate(x):
@@ -48,9 +69,10 @@ class ExtContainer(WidgetExt):
 
 class ExtWindow(WidgetExt):
     """Inherited to when widget is a window."""
-    def __init__(self, master, widgetName, cnf=..., kw=..., extra=...) -> None:
-        super().__init__(master, widgetName, cnf, kw, extra)
-        self.center_window()
+    def __init_subclass__(cls) -> None:
+        def init_end(self: ExtWindow, *args, **kwargs):
+            self.center_window()
+        cls.__init__ = quick_wrap([cls.__init__, init_end])
 
 
     def set_size(self: tk.Tk | tk.Toplevel, size: tuple[float, float]):
@@ -76,6 +98,12 @@ class ExtWindow(WidgetExt):
 
 class ExtText(WidgetExt):
     """Inherited to when widget contains text."""
+    def __init_subclass__(cls) -> None:
+        def init_end(self: ExtText, *args, **kwargs):
+            self.set_font()
+        cls.__init__ = quick_wrap([cls.__init__, init_end])
+
+
     def set_font(
         self,
         family=ul.df.FONT_FAMILY, size_mult=1,
