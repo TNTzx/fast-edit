@@ -25,7 +25,7 @@ class MsgBox(w_e.window.Window):
         self.w_description = self.Description(self, description)
 
         self.w_buttons = self.Buttons(self)
-        self.w_buttons.place_on_grid(self, coords=(0, 1))
+        self.w_buttons.place_on_grid(coords = (0, 1))
 
 
     class Description(w_e.normal.Label):
