@@ -1,6 +1,8 @@
 """Module that contains the class for widget utilities."""
 
 
+from __future__ import annotations
+
 import tkinter as tk
 import tkinter.font as tkf
 
@@ -121,3 +123,23 @@ class ExtText(WidgetExt):
                 overstrike = overline
             )
         )
+
+
+class ExtList(WidgetExt):
+    """Inherited to when a widget contains some sort of list."""
+    def __init__(self, *args, **kwargs):
+        self._list = []
+
+    @property
+    def list(self):
+        """The list."""
+        self.update_from_list()
+        return self._list
+
+    def get_selected(self: ExtList | tk.Listbox):
+        """Gets the selected items of the ExtList."""
+        ...
+
+    def update_from_list(self: tk.Listbox):
+        """Update contents."""
+        ...

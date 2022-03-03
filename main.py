@@ -4,6 +4,7 @@
 import tkinter as tk
 
 import widget_ext.extended_widgets as w_e
+import ui
 
 
 class Main(w_e.window.Root):
@@ -11,13 +12,8 @@ class Main(w_e.window.Root):
     def __init__(self):
         super().__init__()
         self.label = self.Label(self)
-
+        self.title = ui.title.Title()
         self.mainloop()
-
-    class Label(w_e.normal.Label):
-        """Label."""
-        def __init__(self, parent: tk.Widget):
-            super().__init__(parent, text="AAAAAA")
 
 
 
