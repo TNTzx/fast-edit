@@ -3,7 +3,7 @@
 
 import tkinter as tk
 
-import widget_ext.widget_extension as w_e
+import widget_ext.widget_ext_class as w_e
 
 
 class Main(tk.Tk, w_e.WidgetExt):
