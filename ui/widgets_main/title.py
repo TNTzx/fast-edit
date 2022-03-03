@@ -19,8 +19,8 @@ class Title(w_e.contain.Frame):
     class Title(w_e.normal.Label):
         """The title itself."""
         def __init__(self, parent: wec.WidgetExt):
-            super().__init__(parent, text="Fast Edit")
-            self.set_font(size_mult=2, bold=True)
+            super().__init__(parent, text="FAST EDIT")
+            self.set_font(size_mult=3, bold=True)
 
     class Description(w_e.normal.Label):
         """The description."""
