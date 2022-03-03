@@ -7,8 +7,6 @@ import tkinter.filedialog as tkfd
 import widget_ext.widget_ext_class as wec
 import widget_ext.extended_widgets as w_e
 
-import backend.misc.other as of
-
 
 class FileManagerFrame(w_e.contain.Frame):
     """File Manager."""

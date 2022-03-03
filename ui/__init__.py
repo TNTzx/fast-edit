@@ -1,3 +1,3 @@
 """The UI."""
 
-from . import title
+from . import main
