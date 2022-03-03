@@ -24,3 +24,4 @@ class Title(w_e.contain.Frame):
         """The description."""
         def __init__(self, parent: wec.WidgetExt):
             super().__init__(parent, text="A program enabling fast editing. Currently only supports speedup.")
+            self.place_on_grid(coords = (0, 1))

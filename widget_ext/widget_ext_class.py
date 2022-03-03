@@ -24,7 +24,7 @@ class ExecuteInit():
         def end_init(*args, **kwargs):
             for cls_init in cls.__bases__[2:]:
                 cls_init.__init__(*args, **kwargs)
-        
+
         cls.__init__ = quick_wrap([cls.__init__, end_init])
 
 
@@ -74,6 +74,12 @@ class ExtContainer(WidgetExt):
             self.rowconfigure(idx, weight=weight)
 
 
+class ExtFrame(WidgetExt):
+    """Inherited to when widget is a frame."""
+    def __init__(self, *args, **kwargs):
+        self.configure(**ul.df.FRAME)
+
+
 class ExtWindow(WidgetExt):
     """Inherited to when widget is a window."""
     def __init__(self, *args, **kwargs):
@@ -82,7 +88,9 @@ class ExtWindow(WidgetExt):
 
     def set_size(self: tk.Tk | tk.Toplevel, size: tuple[float, float]):
         """Set size of the window."""
-        self.geometry(f"{size[0]}x{size[1]}")
+        def to_int(num: float):
+            return int(round(num))
+        self.geometry(f"{to_int(size[0])}x{to_int(size[1])}")
 
     def center_window(self: tk.Tk | tk.Toplevel):
         """Center the window to the screen."""

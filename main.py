@@ -11,8 +11,12 @@ class Main(w_e.window.Root):
     """The main window."""
     def __init__(self):
         super().__init__()
-        self.label = self.Label(self)
-        self.title = ui.title.Title()
+        self.set_size([x / 2 for x in (1280, 720)])
+        self.center_window()
+
+        self.title = ui.title.Title(self)
+
+
         self.mainloop()
 
 
