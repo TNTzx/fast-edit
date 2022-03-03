@@ -10,8 +10,10 @@ class Title(w_e.contain.Frame):
     def __init__(self, parent: wec.WidgetExt):
         super().__init__(parent)
 
-        self.title = self.Title(self)
-        self.description = self.Description(self)
+        self.w_title = self.Title(self)
+
+        self.w_description = self.Description(self)
+        self.w_description.place_on_grid(coords = (0, 1))
 
 
     class Title(w_e.normal.Label):
@@ -24,4 +26,3 @@ class Title(w_e.contain.Frame):
         """The description."""
         def __init__(self, parent: wec.WidgetExt):
             super().__init__(parent, text="A program enabling fast editing. Currently only supports speedup.")
-            self.place_on_grid(coords = (0, 1))

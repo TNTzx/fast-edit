@@ -1,3 +1,3 @@
 """Extended Widgets."""
 
-from . import normal, contain, window
+from . import contain, normal, window

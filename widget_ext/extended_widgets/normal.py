@@ -6,11 +6,19 @@ import tkinter as tk
 from .. import widget_ext_class as w_e
 
 
-class Label(tk.Label, w_e.ExecuteInit, w_e.ExtGridable, w_e.ExtText):
+class Default(w_e.ExecuteInit, w_e.ExtGridable, w_e.ExtText):
+    """Default."""
+
+
+class Label(tk.Label, Default):
     """Label."""
 
 
-class Listbox(tk.Listbox, w_e.ExecuteInit, w_e.ExtGridable, w_e.ExtText, w_e.ExtList):
+class Button(tk.Button, Default):
+    """Button."""
+
+
+class Listbox(tk.Listbox, Default, w_e.ExtList):
     """Listbox."""
 
     def get_selected(self):
@@ -22,4 +30,8 @@ class Listbox(tk.Listbox, w_e.ExecuteInit, w_e.ExtGridable, w_e.ExtText, w_e.Ext
         self.delete(0, tk.END)
         for item in self._list:
             self.insert(tk.END, item.__repr__())
+
+
+class Entry(tk.Entry, Default):
+    """Entry box."""
     

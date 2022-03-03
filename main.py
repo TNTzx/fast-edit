@@ -11,10 +11,10 @@ class Main(w_e.window.Root):
     """The main window."""
     def __init__(self):
         super().__init__()
-        self.set_size([x / 2 for x in (1280, 720)])
+        self.set_size([x / 1.5 for x in (1280, 720)])
         self.center_window()
 
-        self.title = ui.title.Title(self)
+        self.w_title = ui.title.Title(self)
 
 
         self.mainloop()

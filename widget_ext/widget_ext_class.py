@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import tkinter as tk
+import tkinter.ttk as ttk
 import tkinter.font as tkf
 
 from . import utils as ul
@@ -31,6 +32,29 @@ class ExecuteInit():
 
 class WidgetExt(tk.Widget):
     """Class for widget extensions."""
+    def set_visibility(self, state: bool = True):
+        """Makes a widget visible or not."""
+        if state:
+            self.grid()
+        else:
+            self.grid_remove()
+
+    def set_status(self, state: bool = True):
+        """Enables or disables the widget and its children."""
+        configure = {
+            "state": tk.NORMAL if state else tk.DISABLED
+        }
+
+        def edit_state(widget: WidgetExt):
+            children = widget.winfo_children()
+            if len(children) > 0:
+                for child in children:
+                    edit_state(child)
+            else:
+                if not issubclass(widget.__class__, (tk.Scrollbar, ttk.Progressbar)):
+                    widget.configure(**configure)
+
+        edit_state(self)
 
 
 class ExtGridable(WidgetExt):
