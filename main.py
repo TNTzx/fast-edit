@@ -6,7 +6,7 @@ import tkinter as tk
 import widget_ext.extended_widgets as w_e
 
 
-class Main(w_e.root.ExtRoot):
+class Main(w_e.window.Root):
     """The main window."""
     def __init__(self):
         super().__init__()
@@ -14,12 +14,10 @@ class Main(w_e.root.ExtRoot):
 
         self.mainloop()
 
-    class Label(w_e.normal.ExtLabel):
+    class Label(w_e.normal.Label):
         """Label."""
         def __init__(self, parent: tk.Widget):
             super().__init__(parent, text="AAAAAA")
-            self.set_font(size_mult=10)
-            self.place_on_grid()
 
 
 

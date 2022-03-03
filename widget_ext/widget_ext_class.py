@@ -4,9 +4,8 @@
 import tkinter as tk
 import tkinter.font as tkf
 
-from matplotlib.widgets import Widget
-
 from . import utils as ul
+
 
 
 def quick_wrap(funcs: list):
@@ -14,8 +13,18 @@ def quick_wrap(funcs: list):
     def wrapper(*args, **kwargs):
         for func in funcs:
             func(*args, **kwargs)
-        
+
     return wrapper
+
+class ExecuteInit():
+    """Executes the __init__ functions of the classes."""
+    def __init_subclass__(cls):
+        def end_init(*args, **kwargs):
+            for cls_init in cls.__bases__[2:]:
+                cls_init.__init__(*args, **kwargs)
+        
+        cls.__init__ = quick_wrap([cls.__init__, end_init])
+
 
 
 class WidgetExt(tk.Widget):
@@ -24,10 +33,8 @@ class WidgetExt(tk.Widget):
 
 class ExtGridable(WidgetExt):
     """Inherited to when widget can be placed on a grid."""
-    def __init_subclass__(cls) -> None:
-        def init_end(self: ExtGridable, *args, **kwargs):
-            self.place_on_grid()
-        cls.__init__ = quick_wrap([cls.__init__, init_end])
+    def __init__(self, *args, **kwargs):
+        self.place_on_grid()
 
 
     def place_on_grid(
@@ -53,10 +60,8 @@ class ExtGridable(WidgetExt):
 
 class ExtContainer(WidgetExt):
     """Inherited to when widget is a container."""
-    def __init_subclass__(cls) -> None:
-        def init_end(self: ExtContainer, *args, **kwargs):
-            self.set_weights()
-        cls.__init__ = quick_wrap([cls.__init__, init_end])
+    def __init__(self, *args, **kwargs):
+        self.set_weights()
 
 
     def set_weights(self, x=(1,), y=(1,)):
@@ -69,10 +74,8 @@ class ExtContainer(WidgetExt):
 
 class ExtWindow(WidgetExt):
     """Inherited to when widget is a window."""
-    def __init_subclass__(cls) -> None:
-        def init_end(self: ExtWindow, *args, **kwargs):
-            self.center_window()
-        cls.__init__ = quick_wrap([cls.__init__, init_end])
+    def __init__(self, *args, **kwargs):
+        self.center_window()
 
 
     def set_size(self: tk.Tk | tk.Toplevel, size: tuple[float, float]):
@@ -98,10 +101,8 @@ class ExtWindow(WidgetExt):
 
 class ExtText(WidgetExt):
     """Inherited to when widget contains text."""
-    def __init_subclass__(cls) -> None:
-        def init_end(self: ExtText, *args, **kwargs):
-            self.set_font()
-        cls.__init__ = quick_wrap([cls.__init__, init_end])
+    def __init__(self, *args, **kwargs):
+        self.set_font()
 
 
     def set_font(
