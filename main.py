@@ -15,8 +15,7 @@ class Main(w_e.window.Root):
         self.set_size([x / 1.5 for x in (1280, 720)])
         self.center_window()
 
-        self.w_title = ui.title.Title(self)
-        self.button = self.Button(self)
+        self.w_frame = ui.main.MainFrame(self)
 
         self.mainloop()
 

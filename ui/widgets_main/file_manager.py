@@ -14,13 +14,16 @@ class FileManagerFrame(w_e.contain.Frame):
         super().__init__(parent)
 
 
+        self.set_weights(x = (1, 1, 1))
+
+
         self.w_title = self.Title(self, title)
 
         self.w_entry = self.Entry(self)
-        self.w_entry.place_on_grid(coords = (1, 0))
+        self.w_entry.set_grid(coords = (1, 0))
 
         self.w_browse = self.Browse(self)
-        self.w_browse.place_on_grid(coords = (2, 0))
+        self.w_browse.set_grid(coords = (2, 0))
         self.w_browse.configure(command = self.browse_for_file)
 
 

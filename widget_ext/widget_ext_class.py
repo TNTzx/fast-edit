@@ -60,10 +60,10 @@ class WidgetExt(tk.Widget):
 class ExtGridable(WidgetExt):
     """Inherited to when widget can be placed on a grid."""
     def __init__(self, *args, **kwargs):
-        self.place_on_grid()
+        self.set_grid()
 
 
-    def place_on_grid(
+    def set_grid(
             self,
             coords = (0, 0),
             span_set = (1, 1), ipad_set = (0, 0), pad_set = ul.df.PAD_SET,

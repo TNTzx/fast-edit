@@ -28,7 +28,7 @@ class MsgBox(w_e.window.Window):
         self.w_description = self.Description(self, description)
 
         self.w_buttons = self.Buttons(self)
-        self.w_buttons.place_on_grid(coords = (0, 1))
+        self.w_buttons.set_grid(coords = (0, 1))
 
 
     class Description(w_e.normal.Label):
@@ -62,7 +62,7 @@ class MsgBox(w_e.window.Window):
     def show(self):
         """Shows the message box then waits for input."""
         for idx, button in enumerate(self.buttons):
-            button.place_on_grid(coords = (idx, 0))
+            button.set_grid(coords = (idx, 0))
 
         self.w_buttons.set_weights(x = [1 for _ in self.buttons])
 

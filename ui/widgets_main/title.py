@@ -13,7 +13,7 @@ class Title(w_e.contain.Frame):
         self.w_title = self.Title(self)
 
         self.w_description = self.Description(self)
-        self.w_description.place_on_grid(coords = (0, 1))
+        self.w_description.set_grid(coords = (0, 1))
 
 
     class Title(w_e.normal.Label):
