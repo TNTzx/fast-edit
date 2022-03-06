@@ -1,8 +1,7 @@
 """Other fun functions! :D"""
 
 
-import unicodedata as ud
-import re
+
 
 
 def get_dict_attr(obj):

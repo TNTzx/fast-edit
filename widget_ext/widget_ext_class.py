@@ -168,10 +168,8 @@ class ExtList(WidgetExt):
         self.update_from_list()
         return self._list
 
-    def get_selected(self: ExtList | tk.Listbox):
+    def get_selected(self):
         """Gets the selected items of the ExtList."""
-        ...
 
-    def update_from_list(self: tk.Listbox):
+    def update_from_list(self):
         """Update contents."""
-        ...

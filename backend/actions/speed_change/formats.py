@@ -14,19 +14,31 @@ class SpeedFormat():
         self.value = value
 
     def __repr__(self):
-        return f"{self.name} ({self.prefix})"
+        return f"{self.name} ({self.prefix}): {self.value}"
 
     def __init_subclass__(cls):
         SpeedFormats.register_format(cls)
 
+    @classmethod
+    def get_str_of_class(cls):
+        """Gets the class string."""
+        inst = cls()
+        return f"{inst.name} ({inst.prefix})"
+
+
 class SpeedFormats():
     """Contains all speed formats."""
-    speed_formats = []
+    speed_formats: list[typ.Type[SpeedFormat]] = []
 
     @classmethod
     def register_format(cls, speed_format: typ.Type[SpeedFormat]):
         """Registers the SpeedFormat."""
         cls.speed_formats.append(speed_format)
+    
+    @classmethod
+    def get_strs(cls):
+        """Gets the strings of the registered classes."""
+        return [registered_class.get_str_of_class() for registered_class in cls.speed_formats]
 
 
 class Decimal(SpeedFormat, dt.MainDataclass):
@@ -46,7 +58,6 @@ class Decimal(SpeedFormat, dt.MainDataclass):
         return inst
 
 
-@dt.SetMainDataclass(Decimal)
 class Percent(SpeedFormat, dt.SubDataclass):
     """Percent."""
     def __init__(self, value: int | float = 0):

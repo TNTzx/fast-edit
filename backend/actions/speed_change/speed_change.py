@@ -3,8 +3,11 @@
 
 import typing as typ
 
+import widget_ext.widget_ext_class as wec
+
 from .. import action
 from . import formats as frm
+from . import ui
 
 
 class SpeedChange(action.ActionABC):
@@ -19,8 +22,8 @@ class SpeedChange(action.ActionABC):
 
 
     @classmethod
-    def show_ui(cls, inst=None):
-        ...
+    def show_ui(cls, parent: wec.WidgetExt, inst=None):
+        ui.SpeedChange(parent)
 
 
     def execute_action(self, video_path):

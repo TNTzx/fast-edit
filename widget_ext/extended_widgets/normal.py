@@ -1,6 +1,7 @@
 """Extended normal widgets."""
 
 
+import functools as fc
 import tkinter as tk
 
 from .. import widget_ext_class as w_e
@@ -28,6 +29,11 @@ class Listbox(tk.Listbox, w_e.ExecuteInit, w_e.ExtGridable, w_e.ExtText, w_e.Ext
             self.insert(tk.END, item.__repr__())
 
 
+class Dropdown(tk.OptionMenu, w_e.ExecuteInit, w_e.ExtGridable, w_e.ExtText, w_e.ExtList):
+    """Dropdown."""
+    def update_from_list(self):
+        self.configure(*self.list)
+
+
 class Entry(tk.Entry, w_e.ExecuteInit, w_e.ExtGridable, w_e.ExtText):
     """Entry box."""
-    
