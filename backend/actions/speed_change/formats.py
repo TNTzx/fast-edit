@@ -1,41 +1,49 @@
 """Module that contains formats for representing speed."""
 
+from re import I
+import backend.misc.dataclass as dt
+
 
 class SpeedFormat():
     """Base class for speed formats."""
-    def __init__(self, value: int | float):
+    def __init__(self, value: int | float = 0):
         self.name: str = None
         self.prefix: str = None
         self.value = value
-    
+
     def __repr__(self):
         return f"{self.name} ({self.prefix})"
 
 
-class Decimal(SpeedFormat):
+class Decimal(SpeedFormat, dt.MainDataclass):
     """Decimal."""
-    def __init__(self, value: int | float):
+    def __init__(self, value: int | float = 0):
         super().__init__(value)
         self.name = "Decimal"
         self.prefix = "."
 
-    def from_nonstandard(self, data):
-        """Function to call to convert other speed formats to this one."""
+    @classmethod
+    def from_sub(cls, data: SpeedFormat):
+        inst = cls()
+
         if isinstance(data, Percent):
-            self.value = data / 100
+            inst.value = data.value / 100
+
+        return inst
 
 
-class Percent(SpeedFormat):
+@dt.SetMainDataclass(Decimal)
+class Percent(SpeedFormat, dt.SubDataclass):
     """Percent."""
-    def __init__(self, value: int | float):
+    def __init__(self, value: int | float = 0):
         super().__init__(value)
         self.name = "Percent"
         self.prefix = "%"
 
-    def from_standard(self, data):
-        """Function to call to convert other speed formats to this one."""
-        self.value = data * 100
+    @classmethod
+    def from_main(cls, data: SpeedFormat):
+        inst = cls()
 
+        inst.value = data.value * 100
 
-DEFAULT = 0
-SPEED_FORMATS = [Decimal(DEFAULT), Percent(DEFAULT)]
+        return inst
