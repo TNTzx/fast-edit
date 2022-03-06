@@ -17,5 +17,11 @@ class SpeedChange(action.ActionABC):
         if not isinstance(self.speed_formatted, frm.Decimal):
             self.speed_formatted = frm.Decimal.from_sub(self.speed_formatted)
 
+
+    @classmethod
+    def show_ui(cls, inst=None):
+        ...
+
+
     def execute_action(self, video_path):
         pass
