@@ -168,7 +168,7 @@ class ExtList(WidgetExt):
 
     def update_from_list(self, list_: list):
         """Updates from a list."""
-        self.list = ExtList().list
+        self.list = other.event_list.EventList(self.update_from_attr_list)
         for item in list_:
             self.list.append(item)
 

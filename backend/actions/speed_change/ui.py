@@ -26,18 +26,24 @@ class SpeedChange(w_e.window.Window):
             super().__init__(parent)
             self.set_weights(y = (1, 1))
 
-            self.w_start_speed = generate_speed_definition(self, "Starting speed")
-            self.w_start_speed.set_grid(coords = (0, 1))
-        
+
+            self.w_title = self.Title(self)
+
+            self.w_parameters = self.Parameters(self)
+            self.w_parameters.set_grid(coords = (0, 1))
+
         class Title(w_e.contain.Frame):
             """The title."""
             def __init__(self, parent: wec.WidgetExt):
                 super().__init__(parent)
 
+
+                self.w_text = self.Text(self)
+
             class Text(w_e.normal.Label):
                 """Title text."""
                 def __init__(self, parent: wec.WidgetExt):
-                    super().__init__(parent, text = "Speed Change")
+                    super().__init__(parent, text = "SPEED CHANGE")
                     self.set_font(size_mult = 3, bold = True)
 
         class Parameters(w_e.contain.Frame):
@@ -56,6 +62,9 @@ class SpeedChange(w_e.window.Window):
 
                     self.w_title = self.Title(self)
 
+                    self.w_dropdown = self.Dropdown(self)
+                    self.w_dropdown.set_grid(coords = (1, 0))
+
                 class Title(w_e.normal.Label):
                     """Title text."""
                     def __init__(self, parent: wec.WidgetExt):
@@ -65,7 +74,7 @@ class SpeedChange(w_e.window.Window):
                 class Dropdown(w_e.normal.Dropdown):
                     """The dropdown."""
                     def __init__(self, parent: wec.WidgetExt):
-                        self.variable = tk.StringVar()
+                        self.variable = tk.StringVar(value = "Select...")
                         super().__init__(parent, textvariable = self.variable)
 
                         self.update_from_list(modes.speed_modes.get_cls_strs())
