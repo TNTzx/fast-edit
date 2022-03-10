@@ -68,7 +68,7 @@ class SpeedChange(w_e.window.Window):
                         self.variable = tk.StringVar
                         super().__init__(parent, textvariable = self.variable)
 
-                        [self.list.append(speed_mode()) for speed_mode in modes.SpeedModes.speed_modes]
+                        self.list.append(speed_mode())
 
 
 def generate_speed_definition(parent: wec.WidgetExt, title: str):

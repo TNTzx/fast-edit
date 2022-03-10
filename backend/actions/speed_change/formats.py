@@ -1,12 +1,14 @@
 """Module that contains formats for representing speed."""
 
 
-import typing as typ
-
 import backend.misc.dataclass as dt
+import backend.misc.class_registers as c_r
 
 
-class SpeedFormat():
+speed_formats = c_r.ClassList()
+
+
+class SpeedFormat(c_r.RegisteredClass):
     """Base class for speed formats."""
     name: str = None
     prefix: str = None
@@ -17,29 +19,11 @@ class SpeedFormat():
     def __repr__(self):
         return f"{self.name} ({self.prefix}): {self.value}"
 
-    def __init_subclass__(cls):
-        SpeedFormats.register_format(cls)
-
     @classmethod
-    def get_str_of_class(cls):
+    def cls_to_str(cls):
         """Gets the class string."""
         inst = cls()
         return f"{inst.name} ({inst.prefix})"
-
-
-class SpeedFormats():
-    """Contains all speed formats."""
-    speed_formats: list[typ.Type[SpeedFormat]] = []
-
-    @classmethod
-    def register_format(cls, speed_format: typ.Type[SpeedFormat]):
-        """Registers the SpeedFormat."""
-        cls.speed_formats.append(speed_format)
-
-    @classmethod
-    def get_strs(cls):
-        """Gets the strings of the registered classes."""
-        return [registered_class.get_str_of_class() for registered_class in cls.speed_formats]
 
 
 class Decimal(SpeedFormat, dt.MainDataclass):
@@ -56,6 +40,8 @@ class Decimal(SpeedFormat, dt.MainDataclass):
 
         return inst
 
+speed_formats.register_class(Decimal)
+
 
 class Percent(SpeedFormat, dt.SubDataclass):
     """Percent."""
@@ -69,3 +55,5 @@ class Percent(SpeedFormat, dt.SubDataclass):
         inst.value = data.value * 100
 
         return inst
+
+speed_formats.register_class(Percent)

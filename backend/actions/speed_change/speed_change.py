@@ -15,11 +15,6 @@ class SpeedChange(action.ActionABC):
     def __init__(self, speed_mode: modes.SpeedMode):
         self.speed_mode = speed_mode
 
-    def convert_to_decimal(self):
-        """Converts the speed format to a decimal."""
-        if not isinstance(self.speed_formatted, frm.Decimal):
-            self.speed_formatted = frm.Decimal.from_sub(self.speed_formatted)
-
 
     @classmethod
     def from_ui(cls, parent: wec.WidgetExt, inst=None):

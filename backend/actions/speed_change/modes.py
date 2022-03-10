@@ -2,52 +2,53 @@
 
 
 import backend.misc.dataclass as dt
+import backend.misc.class_registers as c_r
 
 from . import formats as frm
 
 
-class SpeedMode(dt.Dataclass):
+speed_modes = c_r.ClassList()
+
+
+class SpeedMode():
     """A mode for changing speeds."""
     def __init__(self, start_speed: frm.SpeedFormat, end_speed: frm.SpeedFormat):
         self.start_speed = start_speed
         self.end_speed = end_speed
-
-    def __init_subclass__(cls) -> None:
-        SpeedModes.register_mode(cls)
-
 
     def convert_to_decimal(self):
         """Converts the speed format to a decimal."""
         ...
 
 
-class SpeedModes():
-    """Contains all speed modes."""
-    speed_modes: list[SpeedMode] = []
-
-    @classmethod
-    def register_mode(cls, speed_mode: SpeedMode):
-        """Register a mode."""
-        cls.speed_modes.append(speed_mode)
-
-
-class FromToMode(SpeedMode, dt.MainDataclass):
+class FromToMode(SpeedMode, dt.MainDataclass, c_r.RegisteredClass):
     """Describes a speed mode with an initial and end speed."""
-    name = "From Speed To Speed"
+    @classmethod
+    def cls_to_str(cls):
+        return "From Speed To Speed"
 
     @classmethod
     def from_sub(cls, data: SpeedMode):
-        ...
+        inst = cls(data.start_speed, data.end_speed)
+        if isinstance(data, ApplySpeedMode):
+            pass
+        return inst
+
+speed_modes.register_class(FromToMode)
 
 
-class ApplySpeedMode(SpeedMode, dt.SubDataclass):
+class ApplySpeedMode(SpeedMode, dt.SubDataclass, c_r.RegisteredClass):
     """Describes a speed mode with a speed increase."""
-    name = "Apply Speed"
-
     def __init__(self, new_speed: frm.SpeedFormat):
         super().__init__(frm.Decimal(1), new_speed)
+
+    @classmethod
+    def cls_to_str(cls):
+        return "Apply Speed"
 
 
     @classmethod
     def from_main(cls, data: SpeedMode):
         ...
+
+speed_modes.register_class(ApplySpeedMode)

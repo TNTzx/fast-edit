@@ -16,36 +16,23 @@ class RegisteredClass(abc.ABC):
 
 class ClassList():
     """A class list."""
-    cls_list: list[RegisteredClass] = []
+    def __init__(self):
+        self.cls_list: list[RegisteredClass] = []
+    
 
-    @classmethod
-    def register_class(cls, registering_class: RegisteredClass):
-        """Registers a class into the class list."""
-        cls.cls_list.append(registering_class)
+    def register_class(self, reg_class: RegisteredClass):
+        """Register class."""
+        self.cls_list.append(reg_class)
 
-    @classmethod
-    def get_cls_strs(cls):
+
+    def get_cls_strs(self):
         """Get strs of classes."""
-        return [reg_class.cls_to_str() for reg_class in cls.cls_list]
+        return [reg_class.cls_to_str() for reg_class in self.cls_list]
 
-    @classmethod
-    def get_cls_from_str(cls, str_search: str):
+    def get_cls_from_str(self, str_search: str):
         """Gets the class from a str."""
-        for reg_class in cls.cls_list:
+        for reg_class in self.cls_list:
             if reg_class.cls_to_str() == str_search:
                 return reg_class
-        
+
         raise ValueError(f"Cannot find string {str_search} of class list.")
-
-
-def bind_to_class_list(class_list: ClassList):
-    """Bind a parent class to a class list."""
-    def decorator(cls):
-        class ParentClass(cls):
-            """Parent class."""
-            def __init_subclass__(cls) -> None:
-                class_list.register_class(cls)
-
-        return ParentClass
-
-    return decorator
