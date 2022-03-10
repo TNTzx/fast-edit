@@ -23,7 +23,7 @@ class Listbox(tk.Listbox, w_e.ExecuteInit, w_e.ExtGridable, w_e.ExtText, w_e.Ext
         obj_items = [item for item in self._list if item.__repr__() in str_items]
         return obj_items
 
-    def update_from_list(self):
+    def update_from_attr_list(self):
         self.delete(0, tk.END)
         for item in self._list:
             self.insert(tk.END, item.__repr__())
@@ -34,7 +34,7 @@ class Dropdown(ttk.Combobox, w_e.ExecuteInit, w_e.ExtGridable, w_e.ExtText, w_e.
     def get_selected(self):
         ...
 
-    def update_from_list(self):
+    def update_from_attr_list(self):
         self["values"] = self.list
 
 

@@ -65,10 +65,10 @@ class SpeedChange(w_e.window.Window):
                 class Dropdown(w_e.normal.Dropdown):
                     """The dropdown."""
                     def __init__(self, parent: wec.WidgetExt):
-                        self.variable = tk.StringVar
+                        self.variable = tk.StringVar()
                         super().__init__(parent, textvariable = self.variable)
 
-                        self.list.append(speed_mode())
+                        self.update_from_attr_list(modes.speed_modes.get_cls_strs())
 
 
 def generate_speed_definition(parent: wec.WidgetExt, title: str):

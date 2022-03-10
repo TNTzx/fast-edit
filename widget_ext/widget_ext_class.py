@@ -165,7 +165,7 @@ class ExtList(WidgetExt):
 
     def get_selected(self):
         """Gets the selected items of the ExtList."""
-    
+
     def update_from_list(self, list_: list):
         """Updates from a list."""
         self.list = ExtList().list
