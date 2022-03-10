@@ -8,6 +8,7 @@ import tkinter.ttk as ttk
 import tkinter.font as tkf
 
 from . import utils as ul
+from . import other
 
 
 
@@ -160,16 +161,21 @@ class ExtText(WidgetExt):
 class ExtList(WidgetExt):
     """Inherited to when a widget contains some sort of list."""
     def __init__(self, *args, **kwargs):
-        self._list = []
-
-    @property
-    def list(self):
-        """The list."""
-        self.update_from_list()
-        return self._list
+        self.list = other.event_list.EventList(self.update_from_attr_list)
 
     def get_selected(self):
         """Gets the selected items of the ExtList."""
+    
+    def update_from_list(self, list_: list):
+        """Updates from a list."""
+        self.list = ExtList().list
+        [self.list.append(item) for item in list_]
 
-    def update_from_list(self):
+    def update_from_attr_list(self):
         """Update contents."""
+
+
+class ExtVariabled(WidgetExt):
+    """Inherited to when a widget contains a variable."""
+    def __init__(self, *args, **kwargs):
+        self.variable: tk.Variable = None

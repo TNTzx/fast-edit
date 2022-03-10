@@ -6,7 +6,8 @@ import tkinter as tk
 import widget_ext.widget_ext_class as wec
 import widget_ext.extended_widgets as w_e
 
-from . import formats as forms
+from . import formats as frm
+from . import modes
 
 
 class SpeedChange(w_e.window.Window):
@@ -19,13 +20,55 @@ class SpeedChange(w_e.window.Window):
 
         self.w_frame = self.Frame(self)
 
-        self.w_start_speed = generate_speed_definition(self, "Starting speed")
-        self.w_start_speed.set_grid(coords = (0, 1))
-
     class Frame(w_e.contain.Frame):
         """The main frame."""
         def __init__(self, parent: wec.WidgetExt):
             super().__init__(parent)
+            self.set_weights(y = (1, 1))
+
+            self.w_start_speed = generate_speed_definition(self, "Starting speed")
+            self.w_start_speed.set_grid(coords = (0, 1))
+        
+        class Title(w_e.contain.Frame):
+            """The title."""
+            def __init__(self, parent: wec.WidgetExt):
+                super().__init__(parent)
+
+            class Text(w_e.normal.Label):
+                """Title text."""
+                def __init__(self, parent: wec.WidgetExt):
+                    super().__init__(parent, text = "Speed Change")
+                    self.set_font(size_mult = 3, bold = True)
+
+        class Parameters(w_e.contain.Frame):
+            """Parameters."""
+            def __init__(self, parent: wec.WidgetExt):
+                super().__init__(parent)
+
+
+                self.w_select_type = self.SelectType(self)
+
+            class SelectType(w_e.contain.Frame):
+                """Select the type of conversion."""
+                def __init__(self, parent: wec.WidgetExt):
+                    super().__init__(parent)
+
+
+                    self.w_title = self.Title(self)
+
+                class Title(w_e.normal.Label):
+                    """Title text."""
+                    def __init__(self, parent: wec.WidgetExt):
+                        super().__init__(parent, text = "Select Mode")
+                        self.set_font(size_mult = 2, bold = True)
+
+                class Dropdown(w_e.normal.Dropdown):
+                    """The dropdown."""
+                    def __init__(self, parent: wec.WidgetExt):
+                        self.variable = tk.StringVar
+                        super().__init__(parent, textvariable = self.variable)
+
+                        [self.list.append(speed_mode()) for speed_mode in modes.SpeedModes.speed_modes]
 
 
 def generate_speed_definition(parent: wec.WidgetExt, title: str):
@@ -69,6 +112,7 @@ def generate_speed_definition(parent: wec.WidgetExt, title: str):
                 """The dropdown to select the formats."""
                 def __init__(self, parent: wec.WidgetExt):
                     self.variable = tk.StringVar()
-                    super().__init__(parent, self.variable, *forms.SpeedFormats.get_strs())
+                    super().__init__(parent, self.variable)
+
 
     return SpeedDefinition(parent)

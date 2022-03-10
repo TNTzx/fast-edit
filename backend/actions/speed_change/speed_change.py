@@ -6,14 +6,14 @@ import typing as typ
 import widget_ext.widget_ext_class as wec
 
 from .. import action
-from . import formats as frm
+from . import modes
 from . import ui
 
 
 class SpeedChange(action.ActionABC):
     """Contains information for changing the speed of the video."""
-    def __init__(self, speed_formatted: frm.SpeedFormat):
-        self.speed_formatted = speed_formatted
+    def __init__(self, speed_mode: modes.SpeedMode):
+        self.speed_mode = speed_mode
 
     def convert_to_decimal(self):
         """Converts the speed format to a decimal."""
@@ -22,7 +22,7 @@ class SpeedChange(action.ActionABC):
 
 
     @classmethod
-    def show_ui(cls, parent: wec.WidgetExt, inst=None):
+    def from_ui(cls, parent: wec.WidgetExt, inst=None):
         ui.SpeedChange(parent)
 
 

@@ -8,9 +8,10 @@ import backend.misc.dataclass as dt
 
 class SpeedFormat():
     """Base class for speed formats."""
+    name: str = None
+    prefix: str = None
+
     def __init__(self, value: int | float = 0):
-        self.name: str = None
-        self.prefix: str = None
         self.value = value
 
     def __repr__(self):
@@ -34,7 +35,7 @@ class SpeedFormats():
     def register_format(cls, speed_format: typ.Type[SpeedFormat]):
         """Registers the SpeedFormat."""
         cls.speed_formats.append(speed_format)
-    
+
     @classmethod
     def get_strs(cls):
         """Gets the strings of the registered classes."""
@@ -43,10 +44,8 @@ class SpeedFormats():
 
 class Decimal(SpeedFormat, dt.MainDataclass):
     """Decimal."""
-    def __init__(self, value: int | float = 0):
-        super().__init__(value)
-        self.name = "Decimal"
-        self.prefix = "."
+    name = "Decimal"
+    prefix = "."
 
     @classmethod
     def from_sub(cls, data: SpeedFormat):
@@ -60,10 +59,8 @@ class Decimal(SpeedFormat, dt.MainDataclass):
 
 class Percent(SpeedFormat, dt.SubDataclass):
     """Percent."""
-    def __init__(self, value: int | float = 0):
-        super().__init__(value)
-        self.name = "Percent"
-        self.prefix = "%"
+    name = "Percent"
+    prefix = "%"
 
     @classmethod
     def from_main(cls, data: SpeedFormat):
