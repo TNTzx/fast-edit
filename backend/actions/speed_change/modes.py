@@ -17,8 +17,9 @@ class SpeedMode():
         self.end_speed = end_speed
 
     def convert_to_decimal(self):
-        """Converts the speed format to a decimal."""
-        ...
+        """Converts the speed formats to a decimal."""
+        self.start_speed = frm.Decimal.from_sub(self.start_speed)
+        self.end_speed = frm.Decimal.from_sub(self.end_speed)
 
 
 class FromToMode(SpeedMode, dt.MainDataclass, c_r.RegisteredClass):
@@ -49,6 +50,7 @@ class ApplySpeedMode(SpeedMode, dt.SubDataclass, c_r.RegisteredClass):
 
     @classmethod
     def from_main(cls, data: SpeedMode):
-        ...
+        inst = cls(data.end_speed)
+        return inst
 
 speed_modes.register_class(ApplySpeedMode)
